@@ -80,10 +80,18 @@ async function run() {
       res.send(result);
   })
 
-
-
-
-
+  
+  const newProduct=client.db('NewProductToysDB').collection('NewProductToys');
+  app.post('/newProduct',async(req,res)=>{
+    const volunteer=req.body;
+    const result=await newProduct.insertOne(volunteer);
+    res.send(result);
+  })
+  app.get('/newProduct',async(req,res)=>{
+    const cursor=newProduct.find();
+    const result=await cursor.toArray();
+    res.send(result);
+})
 
 
 
