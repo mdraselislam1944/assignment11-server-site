@@ -95,6 +95,25 @@ async function run() {
 
 
 
+  const tabToys=client.db('tabToysDB').collection('tabToys');
+  app.post('/tabToys',async(req,res)=>{
+    const volunteer=req.body;
+    const result=await tabToys.insertOne(volunteer);
+    res.send(result);
+  })  
+
+  app.get('/tabToys',async(req,res)=>{
+    const specificProduct=tabToys.find();
+    const result=await specificProduct.toArray();
+    res.send(result);
+    // const cursor=tabToys.find();
+    // const result=await cursor.toArray();
+    // res.send(result)
+    
+    ;})
+
+
+
 
 
     // Send a ping to confirm a successful connection
