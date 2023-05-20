@@ -111,6 +111,10 @@ async function run() {
     ;})
 
 
+
+    // add Toys CRUD database Part of the website
+
+
     const addAToys=client.db('AddAToysDB').collection('AddAToys');
 
     app.post('/addAToys',async(req,res)=>{
@@ -133,6 +137,32 @@ async function run() {
         res.send(result);
       })
 
+      app.patch('/addAToys/:id',async(req,res)=>{
+        const id=req.params.id;
+        const product=req.body;
+        const filter={_id:new ObjectId(id)}
+        const option={upsert:true}
+        const updateProduct={
+          $set:{
+
+            price:product.price,
+            quantity:product.quantity,
+            description:product.description
+          }
+        }
+        const result=await addAToys.updateOne(filter,updateProduct,option);
+        res.send(result);
+      })
+
+
+      app.delete('/addAToys/:id',async(req,res)=>{
+        const id=req.params.id;
+        const query={_id:new ObjectId(id)}
+        const result=await addAToys.deleteOne(query);
+        res.send(result);
+      })
+
+      
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
